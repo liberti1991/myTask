@@ -5,7 +5,8 @@ import {
 } from "@expo-google-fonts/roboto";
 import { StatusBar } from "react-native";
 import { ThemeProvider } from "styled-components/native";
-import { Loading } from "./src/components/loading";
+import { Loading } from "./src/components/Loading";
+import { MyTasks } from "./src/screens/myTasks";
 import theme from "./src/theme";
 
 export default function App() {
@@ -15,10 +16,10 @@ export default function App() {
     <ThemeProvider theme={theme}>
       <StatusBar
         barStyle="light-content"
-        backgroundColor="transparent"
+        backgroundColor={theme.COLORS.GRAY_700}
         translucent
       />
-      {fontLoaded ? <Loading /> : <Loading />}
+      {fontLoaded ? <MyTasks /> : <Loading />}
     </ThemeProvider>
   );
 }
