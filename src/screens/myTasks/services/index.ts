@@ -1,6 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert, TextInput } from "react-native";
-import { handleUpdatePage } from "../../../hooks/useUpdadePage";
 import { TASKS_COLLECTION } from "../../../storage/storageConfig";
 import { AppError } from "../../../utils/AppError";
 
@@ -17,6 +16,7 @@ export async function fetchTasks(tasksSet: (value: ITask[]) => void) {
 export async function handleAddTask({
   newTasks,
   newTasksSet,
+  handleUpdatePage,
   newTasksInputRef,
 }: IHandleAddTask) {
   if (newTasks.trim().length === 0) {
@@ -68,6 +68,7 @@ export async function tasksGetAll() {
 export type IHandleAddTask = {
   newTasks: string;
   newTasksSet: (value: string) => void;
+  handleUpdatePage: () => void;
   newTasksInputRef: React.RefObject<TextInput>;
 };
 

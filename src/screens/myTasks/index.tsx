@@ -3,7 +3,7 @@ import { TextInput, View } from "react-native";
 import { ButtonIcon } from "../../components/ButtonIcon";
 import { Header } from "../../components/Header";
 import { Input } from "../../components/Input";
-import { updatePage } from "../../hooks/useUpdadePage";
+import { useUpdatePage } from "../../hooks/useUpdatePage";
 import { ITask, fetchTasks, handleAddTask } from "./services";
 import {
   MyTasksContainer,
@@ -15,6 +15,7 @@ import {
 } from "./styles";
 
 export function MyTasks() {
+  const { updatePage, handleUpdatePage } = useUpdatePage();
   const [newTasks, newTasksSet] = useState<string>("");
   const [isLoading, isLoadingSet] = useState<boolean>(true);
   const newTasksInputRef = useRef<TextInput>(null);
@@ -23,13 +24,10 @@ export function MyTasks() {
   const taskCount = tasks.length;
   const checkedCount = tasks.filter((task) => task.checked).length;
 
-  console.log("Retorno", tasks);
-
   useEffect(() => {
+    console.log("effect");
     fetchTasks(tasksSet);
   }, [updatePage]);
-
-  //handleUpdatePage Testar pra ver se vai dar certo
 
   return (
     <MyTasksContainer>
@@ -43,7 +41,12 @@ export function MyTasks() {
           autoCorrect={false}
           placeholder="Adicione uma nova tarefa"
           onSubmitEditing={() =>
-            handleAddTask({ newTasks, newTasksSet, newTasksInputRef })
+            handleAddTask({
+              newTasks,
+              newTasksSet,
+              handleUpdatePage,
+              newTasksInputRef,
+            })
           }
           returnKeyType="done"
         />
@@ -51,7 +54,12 @@ export function MyTasks() {
         <ButtonIcon
           icon="add-circle-outline"
           onPress={() =>
-            handleAddTask({ newTasks, newTasksSet, newTasksInputRef })
+            handleAddTask({
+              newTasks,
+              newTasksSet,
+              handleUpdatePage,
+              newTasksInputRef,
+            })
           }
         />
       </MyTasksForm>
