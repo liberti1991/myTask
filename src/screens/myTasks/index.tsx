@@ -3,7 +3,8 @@ import { TextInput, View } from "react-native";
 import { ButtonIcon } from "../../components/ButtonIcon";
 import { Header } from "../../components/Header";
 import { Input } from "../../components/Input";
-import { ITask, handleAddTask, tasksGetAll } from "./services";
+import { updatePage } from "../../hooks/useUpdadePage";
+import { ITask, fetchTasks, handleAddTask } from "./services";
 import {
   MyTasksContainer,
   MyTasksContainerTasks,
@@ -22,21 +23,13 @@ export function MyTasks() {
   const taskCount = tasks.length;
   const checkedCount = tasks.filter((task) => task.checked).length;
 
-  async function fetchTasks() {
-    try {
-      const response = await tasksGetAll();
-
-      tasksSet(response);
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
   console.log("Retorno", tasks);
 
   useEffect(() => {
-    fetchTasks();
-  }, [newTasks]);
+    fetchTasks(tasksSet);
+  }, [updatePage]);
+
+  //handleUpdatePage Testar pra ver se vai dar certo
 
   return (
     <MyTasksContainer>

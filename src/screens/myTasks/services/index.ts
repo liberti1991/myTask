@@ -1,7 +1,18 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert, TextInput } from "react-native";
+import { handleUpdatePage } from "../../../hooks/useUpdadePage";
 import { TASKS_COLLECTION } from "../../../storage/storageConfig";
 import { AppError } from "../../../utils/AppError";
+
+export async function fetchTasks(tasksSet: (value: ITask[]) => void) {
+  try {
+    const response = await tasksGetAll();
+
+    tasksSet(response);
+  } catch (err) {
+    console.log(err);
+  }
+}
 
 export async function handleAddTask({
   newTasks,
@@ -33,6 +44,8 @@ export async function handleAddTask({
     await AsyncStorage.setItem(TASKS_COLLECTION, storage);
 
     newTasksInputRef.current?.blur();
+
+    handleUpdatePage();
 
     newTasksSet("");
   } catch (err) {
