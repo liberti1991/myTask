@@ -83,7 +83,7 @@ export function MyTasks() {
         data={tasks}
         keyExtractor={(item) => item.task}
         renderItem={({ item }) => <Text>{item.task}</Text>}
-        // contentContainerStyle={tasks.length !== 0 && { flex: 1 }}
+        contentContainerStyle={tasks.length !== 0 && { marginTop: 40 }}
         ListEmptyComponent={<ListEmpty />}
       />
     </MyTasksContainer>

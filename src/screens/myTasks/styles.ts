@@ -19,7 +19,6 @@ export const MyTasksForm = styled.View`
 
 export const MyTasksContainerTasks = styled.View`
   padding: 20px;
-  flex: 1;
 `;
 
 export const MyTasksStatus = styled.View`
