@@ -5,7 +5,7 @@ import {
 } from "@expo-google-fonts/roboto";
 import { StatusBar } from "react-native";
 import { ThemeProvider } from "styled-components/native";
-import { Loading } from "./src/components/loading";
+import { Loading } from "./src/components/Loading";
 import { MyTasks } from "./src/screens/myTasks";
 import theme from "./src/theme";
 

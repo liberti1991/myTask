@@ -1,3 +1,5 @@
-export interface IListEmpty {
-  message: string;
-}
+type IMessage = "Title" | "subTitle";
+
+export type ITypeTitle = {
+  type: IMessage;
+};

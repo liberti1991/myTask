@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { TextInput, View } from "react-native";
+import { FlatList, Text, TextInput, View } from "react-native";
 import { ButtonIcon } from "../../components/ButtonIcon";
 import { Header } from "../../components/Header";
 import { Input } from "../../components/Input";
+import { ListEmpty } from "../../components/ListEmpty";
 import { useUpdatePage } from "../../hooks/useUpdatePage";
 import { ITask, fetchTasks, handleAddTask } from "./services";
 import {
@@ -77,6 +78,14 @@ export function MyTasks() {
           </View>
         </MyTasksStatus>
       </MyTasksContainerTasks>
+
+      <FlatList
+        data={tasks}
+        keyExtractor={(item) => item.task}
+        renderItem={({ item }) => <Text>{item.task}</Text>}
+        // contentContainerStyle={tasks.length !== 0 && { flex: 1 }}
+        ListEmptyComponent={<ListEmpty />}
+      />
     </MyTasksContainer>
   );
 }
