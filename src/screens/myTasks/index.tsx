@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import { FlatList, Text, TextInput, View } from "react-native";
+import { FlatList, TextInput, View } from "react-native";
 import { ButtonIcon } from "../../components/ButtonIcon";
+import { CardTask } from "../../components/CardTasks";
 import { Header } from "../../components/Header";
 import { Input } from "../../components/Input";
 import { ListEmpty } from "../../components/ListEmpty";
@@ -26,7 +27,6 @@ export function MyTasks() {
   const checkedCount = tasks.filter((task) => task.checked).length;
 
   useEffect(() => {
-    console.log("effect");
     fetchTasks(tasksSet);
   }, [updatePage]);
 
@@ -82,8 +82,10 @@ export function MyTasks() {
       <FlatList
         data={tasks}
         keyExtractor={(item) => item.task}
-        renderItem={({ item }) => <Text>{item.task}</Text>}
-        contentContainerStyle={tasks.length !== 0 && { marginTop: 40 }}
+        renderItem={({ item }) => (
+          <CardTask task={item.task} checked={item.checked} />
+        )}
+        contentContainerStyle={tasks.length === 0 && { marginTop: 40 }}
         ListEmptyComponent={<ListEmpty />}
       />
     </MyTasksContainer>
