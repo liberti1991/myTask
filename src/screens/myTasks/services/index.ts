@@ -36,7 +36,6 @@ export async function tasksGetAll() {
 export async function handleAddTask({
   newTasks,
   newTasksSet,
-  handleUpdatePage,
   newTasksInputRef,
 }: IHandleAddTask) {
   if (newTasks.trim().length === 0) {
@@ -64,8 +63,6 @@ export async function handleAddTask({
     await AsyncStorage.setItem(TASKS_COLLECTION, storage);
 
     newTasksInputRef.current?.blur();
-
-    handleUpdatePage();
 
     newTasksSet("");
   } catch (err) {

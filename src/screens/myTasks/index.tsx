@@ -1,87 +1,61 @@
-import { useEffect, useRef, useState } from "react";
-import { FlatList, TextInput, View } from "react-native";
-import { ButtonIcon } from "../../components/ButtonIcon";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useCallback, useState } from "react";
+import { FlatList, View } from "react-native";
+import { Button } from "../../components/Button";
 import { CardTask } from "../../components/CardTasks";
 import { Header } from "../../components/Header";
-import { Input } from "../../components/Input";
 import { ListEmpty } from "../../components/ListEmpty";
 import { Loading } from "../../components/Loading";
 import { useUpdatePage } from "../../hooks/useUpdatePage";
-import { fetchTasks, handleAddTask } from "./services";
+import { Container } from "../../styles/container";
+import { fetchTasks } from "./services";
 import { ITask } from "./services/interfaces";
 import {
-  MyTasksContainer,
-  MyTasksContainerTasks,
-  MyTasksForm,
   MyTasksStatus,
   MyTasksStatusCircle,
   MyTasksStatusTitle,
 } from "./styles";
 
 export function MyTasks() {
+  const navigation = useNavigation();
   const { updatePage, handleUpdatePage } = useUpdatePage();
 
   const [isLoading, isLoadingSet] = useState<boolean>(true);
-
-  const [newTasks, newTasksSet] = useState<string>("");
-  const newTasksInputRef = useRef<TextInput>(null);
 
   const [tasks, tasksSet] = useState<ITask[]>([]);
   const taskCount = tasks.length;
   const checkedCount = tasks.filter((task) => task.checked).length;
 
-  useEffect(() => {
-    fetchTasks(tasksSet, isLoadingSet);
-  }, [updatePage]);
+  function handleNewTask() {
+    navigation.navigate("newTask");
+  }
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchTasks(tasksSet, isLoadingSet);
+    }, [updatePage])
+  );
 
   return (
-    <MyTasksContainer>
+    <Container>
       <Header />
 
-      <MyTasksForm>
-        <Input
-          inputRef={newTasksInputRef}
-          value={newTasks}
-          onChangeText={newTasksSet}
-          autoCorrect={false}
-          placeholder="Adicione uma nova tarefa"
-          onSubmitEditing={() =>
-            handleAddTask({
-              newTasks,
-              newTasksSet,
-              handleUpdatePage,
-              newTasksInputRef,
-            })
-          }
-          returnKeyType="done"
-        />
+      <MyTasksStatus>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <MyTasksStatusTitle type="maids">Criadas</MyTasksStatusTitle>
+          <MyTasksStatusCircle>{taskCount}</MyTasksStatusCircle>
+        </View>
 
-        <ButtonIcon
-          icon="add-circle-outline"
-          onPress={() =>
-            handleAddTask({
-              newTasks,
-              newTasksSet,
-              handleUpdatePage,
-              newTasksInputRef,
-            })
-          }
-        />
-      </MyTasksForm>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <MyTasksStatusTitle type="pending">Pendentes</MyTasksStatusTitle>
+          <MyTasksStatusCircle>{taskCount - checkedCount}</MyTasksStatusCircle>
+        </View>
 
-      <MyTasksContainerTasks>
-        <MyTasksStatus>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <MyTasksStatusTitle type="maids">Criadas</MyTasksStatusTitle>
-            <MyTasksStatusCircle>{taskCount}</MyTasksStatusCircle>
-          </View>
-
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <MyTasksStatusTitle type="completed">Concluídas</MyTasksStatusTitle>
-            <MyTasksStatusCircle>{checkedCount}</MyTasksStatusCircle>
-          </View>
-        </MyTasksStatus>
-      </MyTasksContainerTasks>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <MyTasksStatusTitle type="completed">Concluídas</MyTasksStatusTitle>
+          <MyTasksStatusCircle>{checkedCount}</MyTasksStatusCircle>
+        </View>
+      </MyTasksStatus>
 
       {isLoading ? (
         <Loading />
@@ -102,6 +76,8 @@ export function MyTasks() {
           ListEmptyComponent={<ListEmpty />}
         />
       )}
-    </MyTasksContainer>
+
+      <Button title="Adicionar nova tarefa" onPress={handleNewTask} />
+    </Container>
   );
 }

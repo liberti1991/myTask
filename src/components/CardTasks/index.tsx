@@ -1,5 +1,6 @@
 import Checkbox from "expo-checkbox";
 import { useState } from "react";
+import { Alert } from "react-native";
 import { useTheme } from "styled-components";
 import {
   handleEditTask,
@@ -19,6 +20,13 @@ export function CardTask({ task, checked, updatePage }: ICardTask) {
     handleEditTask(task, newValue, updatePage);
   }
 
+  function handleConfirmDelete() {
+    Alert.alert("Remover", "Deseja remover a tarefa ?", [
+      { text: "Não", style: "cancel" },
+      { text: "Sim", onPress: () => handleRemoveTask(task, updatePage) },
+    ]);
+  }
+
   return (
     <CardTaskContainer>
       <Checkbox
@@ -28,10 +36,7 @@ export function CardTask({ task, checked, updatePage }: ICardTask) {
         color={isChecked ? `${COLORS.PURPLE_DARK}` : `${COLORS.BLUE_DARK}`}
       />
       <CardTaskTitle checked={isChecked}>{task}</CardTaskTitle>
-      <IonIcons
-        icon="trash"
-        onPress={() => handleRemoveTask(task, updatePage)}
-      />
+      <IonIcons icon="trash" onPress={handleConfirmDelete} />
     </CardTaskContainer>
   );
 }

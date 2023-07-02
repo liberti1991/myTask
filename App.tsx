@@ -6,7 +6,7 @@ import {
 import { StatusBar } from "react-native";
 import { ThemeProvider } from "styled-components/native";
 import { Loading } from "./src/components/Loading";
-import { MyTasks } from "./src/screens/myTasks";
+import { Routes } from "./src/routes";
 import theme from "./src/theme";
 
 export default function App() {
@@ -19,7 +19,7 @@ export default function App() {
         backgroundColor={theme.COLORS.GRAY_700}
         translucent
       />
-      {fontLoaded ? <MyTasks /> : <Loading />}
+      {fontLoaded ? <Routes /> : <Loading />}
     </ThemeProvider>
   );
 }

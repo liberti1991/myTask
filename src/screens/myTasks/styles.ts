@@ -1,33 +1,14 @@
-import { SafeAreaView } from "react-native-safe-area-context";
 import styled, { css } from "styled-components/native";
 import { IColorsTitle } from "./interfaces";
-
-export const MyTasksContainer = styled(SafeAreaView)`
-  flex: 1;
-  background-color: ${({ theme }) => theme.COLORS.GRAY_600};
-`;
-
-export const MyTasksForm = styled.View`
-  position: absolute;
-  top: 150px;
-  width: 100%;
-  padding: 0 20px;
-  flex-direction: row;
-  justify-content: center;
-  gap: 10px;
-`;
-
-export const MyTasksContainerTasks = styled.View`
-  padding: 20px;
-`;
 
 export const MyTasksStatus = styled.View`
   width: 100%;
   flex-direction: row;
-  padding: 35px 10px 20px;
+  padding: 15px;
   justify-content: space-between;
   border-bottom-width: 1px;
   border-bottom-color: ${({ theme }) => theme.COLORS.GRAY_400};
+  margin-bottom: 20px;
 `;
 
 export const MyTasksStatusCircle = styled.Text`
@@ -42,7 +23,11 @@ export const MyTasksStatusCircle = styled.Text`
 
 export const MyTasksStatusTitle = styled.Text<IColorsTitle>`
   ${({ theme, type }) => css`
-    color: ${type === "maids" ? theme.COLORS.BLUE : theme.COLORS.PURPLE};
+    color: ${type === "maids"
+      ? theme.COLORS.BLUE
+      : type === "pending"
+      ? theme.COLORS.DANGER
+      : theme.COLORS.PURPLE};
   `}
 
   margin-right:10px;
