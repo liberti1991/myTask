@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components/native";
+import { ICardTaskTitle } from "./interfaces";
 
 export const CardTaskContainer = styled.View`
   ${({ theme }) => css`
@@ -17,7 +18,11 @@ export const CardTaskContainer = styled.View`
   border-width: 1px;
 `;
 
-export const CardTaskTitle = styled.Text`
+export const CardTaskTitle = styled.Text<ICardTaskTitle>`
+  ${({ theme, checked }) => css`
+    color: ${checked ? theme.COLORS.GRAY_300 : theme.COLORS.GRAY_100};
+    text-decoration: ${checked && "line-through"};
+  `}
+
   flex: 1;
-  color: ${({ theme }) => theme.COLORS.GRAY_100};
 `;

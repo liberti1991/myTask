@@ -5,8 +5,10 @@ import { CardTask } from "../../components/CardTasks";
 import { Header } from "../../components/Header";
 import { Input } from "../../components/Input";
 import { ListEmpty } from "../../components/ListEmpty";
+import { Loading } from "../../components/Loading";
 import { useUpdatePage } from "../../hooks/useUpdatePage";
-import { ITask, fetchTasks, handleAddTask } from "./services";
+import { fetchTasks, handleAddTask } from "./services";
+import { ITask } from "./services/interfaces";
 import {
   MyTasksContainer,
   MyTasksContainerTasks,
@@ -18,8 +20,10 @@ import {
 
 export function MyTasks() {
   const { updatePage, handleUpdatePage } = useUpdatePage();
-  const [newTasks, newTasksSet] = useState<string>("");
+
   const [isLoading, isLoadingSet] = useState<boolean>(true);
+
+  const [newTasks, newTasksSet] = useState<string>("");
   const newTasksInputRef = useRef<TextInput>(null);
 
   const [tasks, tasksSet] = useState<ITask[]>([]);
@@ -27,7 +31,7 @@ export function MyTasks() {
   const checkedCount = tasks.filter((task) => task.checked).length;
 
   useEffect(() => {
-    fetchTasks(tasksSet);
+    fetchTasks(tasksSet, isLoadingSet);
   }, [updatePage]);
 
   return (
@@ -79,21 +83,25 @@ export function MyTasks() {
         </MyTasksStatus>
       </MyTasksContainerTasks>
 
-      <FlatList
-        data={tasks}
-        keyExtractor={(item) => item.task}
-        renderItem={({ item }) => (
-          <CardTask task={item.task} checked={item.checked} />
-        )}
-        contentContainerStyle={tasks.length === 0 && { marginTop: 40 }}
-        ListEmptyComponent={<ListEmpty />}
-      />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <FlatList
+          data={tasks}
+          keyExtractor={(item) => item.task}
+          renderItem={({ item }) => (
+            <CardTask
+              task={item.task}
+              checked={item.checked}
+              updatePage={handleUpdatePage}
+            />
+          )}
+          contentContainerStyle={
+            tasks.length === 0 ? { marginTop: 40 } : { paddingBottom: 20 }
+          }
+          ListEmptyComponent={<ListEmpty />}
+        />
+      )}
     </MyTasksContainer>
   );
 }
-
-type IColorStatus = "maids" | "completed";
-
-export type IColorsTitle = {
-  type: IColorStatus;
-};

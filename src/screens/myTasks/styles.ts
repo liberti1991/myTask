@@ -1,6 +1,6 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import styled, { css } from "styled-components/native";
-import { IColorsTitle } from ".";
+import { IColorsTitle } from "./interfaces";
 
 export const MyTasksContainer = styled(SafeAreaView)`
   flex: 1;
