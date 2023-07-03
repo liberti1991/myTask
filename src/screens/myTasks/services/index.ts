@@ -1,9 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Alert } from "react-native";
 import { CatchError } from "../../../components/CatchError";
 import { TASKS_COLLECTION } from "../../../storage/storageConfig";
-import { AppError } from "../../../utils/AppError";
-import { IHandleAddTask, ITask } from "./interfaces";
+import { ITask } from "../interfaces";
 
 export async function fetchTasks(
   tasksSet: (value: ITask[]) => void,
@@ -33,58 +31,23 @@ export async function tasksGetAll() {
   }
 }
 
-export async function handleAddTask({
-  newTasks,
-  newTasksSet,
-  newTasksInputRef,
-}: IHandleAddTask) {
-  if (newTasks.trim().length === 0) {
-    return Alert.alert("Nova Tarefa", "Digite uma descrição para sua tarefa.");
-  }
-
-  try {
-    const newTasksTemp: ITask = {
-      task: newTasks,
-      checked: false,
-    };
-
-    const storageTasks = await tasksGetAll();
-
-    const tasksAlreadyExists = storageTasks.filter(
-      (el) => el.task === newTasksTemp.task
-    );
-
-    if (tasksAlreadyExists.length > 0) {
-      throw new AppError("Nova tarefa", "Tarefa ja cadastrada");
-    }
-
-    const storage = JSON.stringify([...storageTasks, newTasksTemp]);
-
-    await AsyncStorage.setItem(TASKS_COLLECTION, storage);
-
-    newTasksInputRef.current?.blur();
-
-    newTasksSet("");
-  } catch (err) {
-    CatchError(err, "Nova Tarefa", "Não foi possível adicionar a tarefa!");
-  }
-}
-
-export async function handleEditTask(
-  task: string,
+export async function handleEditCheckedTask(
+  task: ITask,
   newValue: boolean,
   updatePage: () => void
 ) {
   try {
-    const taskEditing: ITask = {
-      task: task,
+    const taskEditing = {
+      id: task.id,
+      task: task.task,
+      description: task.description,
       checked: newValue,
     };
 
     const storageTasks = await tasksGetAll();
 
     const newStorageTasks = storageTasks.map((el) =>
-      el.task === task ? taskEditing : el
+      el.id === task.id ? taskEditing : el
     );
 
     const tasks = JSON.stringify(newStorageTasks);
@@ -101,11 +64,11 @@ export async function handleEditTask(
   }
 }
 
-export async function handleRemoveTask(task: string, updatePage: () => void) {
+export async function handleRemoveTask(id: string, updatePage: () => void) {
   try {
     const storageTasks = await tasksGetAll();
 
-    const newStorageTasks = storageTasks.filter((el) => el.task !== task);
+    const newStorageTasks = storageTasks.filter((el) => el.id !== id);
 
     const tasks = JSON.stringify(newStorageTasks);
 

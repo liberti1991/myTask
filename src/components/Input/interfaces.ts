@@ -1,5 +1,5 @@
-import { TextInput, TextInputProps } from "react-native";
+import { TextInputProps } from "react-native";
 
-export type IInput = TextInputProps & {
-  inputRef?: React.RefObject<TextInput>;
+export type InputProps = TextInputProps & {
+  title: string;
 };

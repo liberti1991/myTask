@@ -8,8 +8,8 @@ import { ListEmpty } from "../../components/ListEmpty";
 import { Loading } from "../../components/Loading";
 import { useUpdatePage } from "../../hooks/useUpdatePage";
 import { Container } from "../../styles/container";
+import { ITask } from "./interfaces";
 import { fetchTasks } from "./services";
-import { ITask } from "./services/interfaces";
 import {
   MyTasksStatus,
   MyTasksStatusCircle,
@@ -27,7 +27,7 @@ export function MyTasks() {
   const checkedCount = tasks.filter((task) => task.checked).length;
 
   function handleNewTask() {
-    navigation.navigate("newTask");
+    navigation.navigate("newTask", {});
   }
 
   useFocusEffect(
@@ -46,10 +46,14 @@ export function MyTasks() {
           <MyTasksStatusCircle>{taskCount}</MyTasksStatusCircle>
         </View>
 
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <MyTasksStatusTitle type="pending">Pendentes</MyTasksStatusTitle>
-          <MyTasksStatusCircle>{taskCount - checkedCount}</MyTasksStatusCircle>
-        </View>
+        {taskCount - checkedCount !== 0 && (
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <MyTasksStatusTitle type="pending">Pendentes</MyTasksStatusTitle>
+            <MyTasksStatusCircle>
+              {taskCount - checkedCount}
+            </MyTasksStatusCircle>
+          </View>
+        )}
 
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <MyTasksStatusTitle type="completed">Concluídas</MyTasksStatusTitle>
@@ -62,13 +66,9 @@ export function MyTasks() {
       ) : (
         <FlatList
           data={tasks}
-          keyExtractor={(item) => item.task}
+          keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <CardTask
-              task={item.task}
-              checked={item.checked}
-              updatePage={handleUpdatePage}
-            />
+            <CardTask task={item} updatePage={handleUpdatePage} />
           )}
           contentContainerStyle={
             tasks.length === 0 ? { marginTop: 40 } : { paddingBottom: 20 }
