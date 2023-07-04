@@ -3,19 +3,14 @@ import { CatchError } from "../../../components/CatchError";
 import { TASKS_COLLECTION } from "../../../storage/storageConfig";
 import { ITask } from "../interfaces";
 
-export async function fetchTasks(
-  tasksSet: (value: ITask[]) => void,
-  isLoadingSet: (value: boolean) => void
-) {
+export async function fetchTasks(tasksSet: (value: ITask[]) => void) {
   try {
-    isLoadingSet(true);
     const response = await tasksGetAll();
 
     tasksSet(response);
   } catch (err) {
     throw err;
   } finally {
-    isLoadingSet(false);
   }
 }
 

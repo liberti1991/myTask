@@ -4,11 +4,16 @@ import { IColorsTitle } from "./interfaces";
 export const MyTasksStatus = styled.View`
   width: 100%;
   flex-direction: row;
-  padding: 15px;
+  padding: 15px 30px;
   justify-content: space-between;
   border-bottom-width: 1px;
   border-bottom-color: ${({ theme }) => theme.COLORS.GRAY_400};
   margin-bottom: 20px;
+`;
+
+export const ContainerStatus = styled.TouchableOpacity`
+  flex-direction: row;
+  align-items: center;
 `;
 
 export const MyTasksStatusCircle = styled.Text`

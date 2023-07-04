@@ -2,7 +2,7 @@ import styled, { css } from "styled-components/native";
 import { InputProps } from "./interfaces";
 
 export const InputContainer = styled.View`
-  min-height: 40px;
+  min-height: 50px;
   margin-bottom: 10px;
 `;
 
@@ -10,13 +10,8 @@ export const InputLabel = styled.Text`
   ${({ theme }) => css`
     color: ${theme.COLORS.GRAY_200};
     font-family: ${theme.FONT_FAMILY.REGULAR};
-    font-size: ${theme.FONT_SIZE.MD}px;
+    font-size: ${theme.FONT_SIZE.SM}px;
   `}
-
-  position: absolute;
-  z-index: 1;
-  top: -13px;
-  left: 10px;
 `;
 
 export const InputComponent = styled.TextInput<InputProps>`
@@ -25,7 +20,7 @@ export const InputComponent = styled.TextInput<InputProps>`
     color: ${theme.COLORS.GRAY_200};
     font-family: ${theme.FONT_FAMILY.REGULAR};
     font-size: ${theme.FONT_SIZE.MD}px;
-    min-height: ${multiline === true ? "100px" : "46px"};
+    min-height: ${multiline === true ? "100px" : "44px"};
   `}
 
   flex: 1;

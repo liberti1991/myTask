@@ -8,6 +8,8 @@ export const ButtonContainer = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
   background-color: ${({ theme }) => theme.COLORS.GRAY_500};
+  margin: 20px;
+  border-radius: 5px;
 `;
 
 export const ButtonTitle = styled.Text`

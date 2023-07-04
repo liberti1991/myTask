@@ -80,7 +80,10 @@ export function NewTask() {
         />
       </MyTasksForm>
 
-      <Button title="Cadastrar tarefa" onPress={handleSubmit(onSubmit)} />
+      <Button
+        title={task ? "Atualizar tarefa" : "Cadastrar tarefa"}
+        onPress={handleSubmit(onSubmit)}
+      />
     </Container>
   );
 }
