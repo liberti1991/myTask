@@ -30,7 +30,7 @@ export function MyTasks() {
   const [selectedStatus, selectedStatusSet] = useState<string>("maids");
 
   function handleNewTask() {
-    navigation.navigate("newTask", {});
+    navigation.navigate("newTask", { editable: true });
   }
 
   useFocusEffect(

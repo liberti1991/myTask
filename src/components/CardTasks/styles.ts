@@ -11,7 +11,7 @@ export const CardTaskContainer = styled.View`
   padding: 0 20px;
   flex-direction: row;
   gap: 10px;
-  height: 50px;
+  height: 60px;
   justify-content: center;
   align-items: center;
   border-radius: 5px;
@@ -23,6 +23,4 @@ export const CardTaskTitle = styled.Text<ICardTaskTitle>`
     color: ${checked ? theme.COLORS.GRAY_300 : theme.COLORS.GRAY_100};
     text-decoration: ${checked && "line-through"};
   `}
-
-  flex: 1;
 `;

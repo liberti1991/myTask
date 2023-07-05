@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import Checkbox from "expo-checkbox";
 import { useState } from "react";
-import { Alert } from "react-native";
+import { Alert, View } from "react-native";
 import { useTheme } from "styled-components";
 import {
   handleEditCheckedTask,
@@ -22,8 +22,12 @@ export function CardTask({ task, updatePage }: ICardTask) {
     handleEditCheckedTask(task, newValue, updatePage);
   }
 
+  function handleViewTask() {
+    navigation.navigate("newTask", { task: task, editable: false });
+  }
+
   function handleEditTask() {
-    navigation.navigate("newTask", { task: task });
+    navigation.navigate("newTask", { task: task, editable: true });
   }
 
   function handleConfirmDelete() {
@@ -41,9 +45,25 @@ export function CardTask({ task, updatePage }: ICardTask) {
         onValueChange={handleCheckboxChange}
         color={isChecked ? `${COLORS.PURPLE_DARK}` : `${COLORS.BLUE_DARK}`}
       />
-      <CardTaskTitle checked={isChecked}>{task.task}</CardTaskTitle>
-      {!isChecked && <IonIcons icon="pencil-sharp" onPress={handleEditTask} />}
-      <IonIcons icon="trash" onPress={handleConfirmDelete} />
+
+      <View style={{ flex: 1 }}>
+        <CardTaskTitle checked={isChecked}>{task.task}</CardTaskTitle>
+        <CardTaskTitle checked={isChecked}>
+          {task.description &&
+          task.description.replace(/\s{2,}/g, " ").length >= 25
+            ? `${task.description.replace(/\s{2,}/g, " ").slice(0, 25)}...`
+            : task.description.replace(/\s{2,}/g, " ")}
+        </CardTaskTitle>
+      </View>
+
+      {!isChecked && (
+        <>
+          <IonIcons icon="pencil-sharp" onPress={handleEditTask} />
+          <IonIcons icon="trash" onPress={handleConfirmDelete} />
+        </>
+      )}
+
+      {isChecked && <IonIcons icon="eye-outline" onPress={handleViewTask} />}
     </CardTaskContainer>
   );
 }

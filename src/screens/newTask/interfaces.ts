@@ -1,5 +1,10 @@
 import { ITask } from "../myTasks/interfaces";
 
+export type IRouteParams = {
+  task: ITask;
+  editable: boolean;
+};
+
 export type FormData = {
   task: string;
   description: string;

@@ -6,6 +6,7 @@ export declare global {
       myTasks: undefined;
       newTask: {
         task?: ITask;
+        editable: boolean;
       };
     }
   }
