@@ -109,9 +109,13 @@ export function NewTask() {
             ? "Atualizar tarefa"
             : "Cadastrar tarefa"
         }
-        onPress={() =>
-          editable === false ? handleGoToHome() : handleSubmit(onSubmit)
-        }
+        onPress={() => {
+          if (editable === false) {
+            handleGoToHome();
+          } else {
+            handleSubmit(onSubmit)();
+          }
+        }}
       />
     </Container>
   );
