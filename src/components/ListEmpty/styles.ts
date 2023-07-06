@@ -5,6 +5,7 @@ export const ListEmptyContainer = styled.View`
   justify-content: center;
   align-items: center;
   flex: 1;
+  margin-top: 40px;
 `;
 
 export const ListEmptyMessage = styled.Text<ITypeTitle>`

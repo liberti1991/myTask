@@ -76,10 +76,7 @@ export function MyTasks() {
         renderItem={({ item }) => (
           <CardTask task={item} updatePage={handleUpdatePage} />
         )}
-        contentContainerStyle={
-          tasks.length === 0 ? { marginTop: 40 } : { paddingBottom: 20 }
-        }
-        ListEmptyComponent={<ListEmpty />}
+        ListEmptyComponent={<ListEmpty type={selectedStatus} />}
       />
 
       <Button title="Adicionar nova tarefa" onPress={handleNewTask} />

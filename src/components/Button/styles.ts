@@ -2,12 +2,17 @@ import { css } from "styled-components";
 import styled from "styled-components/native";
 
 export const ButtonContainer = styled.TouchableOpacity`
+  ${({ theme }) => css`
+    border-color: ${theme.COLORS.GRAY_400};
+    background-color: ${theme.COLORS.GRAY_500};
+  `}
+
+  border-width: 1px;
   flex: 1;
   min-height: 56px;
   max-height: 56px;
   justify-content: center;
   align-items: center;
-  background-color: ${({ theme }) => theme.COLORS.GRAY_500};
   margin: 20px;
   border-radius: 5px;
 `;

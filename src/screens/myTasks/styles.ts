@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components/native";
-import { IColorsTitle } from "./interfaces";
+import { IStatusProps } from "./interfaces";
 
 export const MyTasksStatus = styled.View`
   width: 100%;
@@ -26,7 +26,7 @@ export const MyTasksStatusCircle = styled.Text`
   border-radius: 50px;
 `;
 
-export const MyTasksStatusTitle = styled.Text<IColorsTitle>`
+export const MyTasksStatusTitle = styled.Text<IStatusProps>`
   ${({ theme, type }) => css`
     color: ${type === "maids"
       ? theme.COLORS.BLUE

@@ -1,7 +1,7 @@
-type IColorStatus = "maids" | "pending" | "completed";
+type IStatus = "maids" | "pending" | "completed";
 
-export type IColorsTitle = {
-  type: IColorStatus;
+export type IStatusProps = {
+  type: IStatus;
 };
 
 export type ITask = {

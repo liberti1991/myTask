@@ -45,7 +45,8 @@ export function NewTask() {
 
   return (
     <Container>
-      <Header />
+      <Header showBtn />
+
       <MyTasksForm>
         <Controller
           control={control}
@@ -61,8 +62,6 @@ export function NewTask() {
                   maxLength={31}
                   placeholder="Adicione uma nova tarefa"
                   editable={editable}
-                  selectTextOnFocus={editable}
-                  onSubmitEditing={() => {}}
                   returnKeyType="done"
                 />
                 {errors.task && <Error error={errors.task.message} />}
@@ -85,8 +84,6 @@ export function NewTask() {
                 onChangeText={onChange}
                 placeholder="Adicione uma nova tarefa"
                 editable={editable}
-                selectTextOnFocus={editable}
-                onSubmitEditing={() => {}}
                 returnKeyType="done"
               />
 

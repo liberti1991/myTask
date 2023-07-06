@@ -26,7 +26,7 @@ export async function handleAddTask({ data, handleGoToHome }: IHandleAddTask) {
       throw new AppError("Nova tarefa", "Tarefa ja cadastrada");
     }
 
-    const storage = JSON.stringify([...storageTasks, newTasksTemp]);
+    const storage = JSON.stringify([newTasksTemp, ...storageTasks]);
 
     await AsyncStorage.setItem(TASKS_COLLECTION, storage);
 
