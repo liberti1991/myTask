@@ -7,6 +7,7 @@ export const schemaNewTask = object({
     .min(4, msgSchema.min(4))
     .max(30, msgSchema.max(30))
     .required(msgSchema.required),
+
   description: string()
     .transform((value) => value.trimStart().replace(/\s/g, ""))
     .min(10, msgSchema.min(10))

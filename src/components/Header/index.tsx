@@ -4,6 +4,7 @@ import { HeaderBtn, HeaderContainer } from "./styles";
 import { useNavigation } from "@react-navigation/native";
 import LogoHeader from "../../assets/Logo.png";
 import { IonIcons } from "../Icons/IonIcons";
+import { HeaderProps } from "./interfaces";
 
 export function Header({ showBtn = false }: HeaderProps) {
   const navigation = useNavigation();
